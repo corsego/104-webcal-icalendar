@@ -24,4 +24,6 @@
     <%= game.address %>
   </p>
 
+  <%#= game.to_icalendar %>
+  <%= link_to 'add to calendar', game_path(game, format: :ics) %>
 </div>

@@ -8,6 +8,15 @@ class GamesController < ApplicationController
 
   # GET /games/1 or /games/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.ics do
+        # render plain: @game.to_icalendar
+        game_ics = Games::IcalendarEvent.new(game: @game).call
+        # send_data @game.to_icalendar, filename: "#{@game.title}.ics"
+        send_data game_ics, filename: "#{@game.title}.ics"
+      end
+    end
   end
 
   # GET /games/new

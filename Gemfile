@@ -74,3 +74,5 @@ end
 gem "faker", "~> 3.1"
 
 gem "letter_opener", "~> 1.8"
+
+gem "icalendar", "~> 2.8"
