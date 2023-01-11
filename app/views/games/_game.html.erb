@@ -25,5 +25,6 @@
   </p>
 
   <%#= game.to_icalendar %>
+  <%= button_to 'send email invite', invite_game_path(game) %>
   <%= link_to 'add to calendar', game_path(game, format: :ics) %>
 </div>

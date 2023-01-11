@@ -1,9 +1,15 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[ show edit update destroy ]
+  before_action :set_game, only: %i[ show edit update destroy invite ]
 
   # GET /games or /games.json
   def index
     @games = Game.all
+  end
+
+  def invite
+    # binding.b
+    GameMailer.with(game: @game).invite.deliver_now
+    redirect_to @game, notice: 'Invite sent'
   end
 
   # GET /games/1 or /games/1.json
