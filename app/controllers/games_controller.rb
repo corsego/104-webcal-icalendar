@@ -1,9 +1,30 @@
 class GamesController < ApplicationController
   before_action :set_game, only: %i[ show edit update destroy invite ]
+  # skip_before_action :authenticate_user, only: :index
 
   # GET /games or /games.json
   def index
     @games = Game.all
+    respond_to do |format|
+      format.html
+      format.ics do
+        cal = Icalendar::Calendar.new
+        cal.x_wr_calname = 'SupeRails episodes'
+        @games.each do |game|
+          cal.event do |e|
+            e.dtstart = game.starts_at
+            e.dtend = game.ends_at
+            e.summary = game.title
+            e.description = game.description
+            e.location = game.address
+            e.uid = "game#{game.id.to_s}"
+            e.sequence = Time.now.to_i
+          end
+        end
+        cal.publish
+        render plain: cal.to_ical
+      end
+    end
   end
 
   def invite
